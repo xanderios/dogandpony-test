@@ -1,0 +1,52 @@
+[
+  {
+    "color": "yellow",
+    "title": "Headquarters",
+    "address": "3763 W. Dallas St.",
+    "name": "Hellena John",
+    "position": "Software Tester",
+    "email": "georgia.young@example.com",
+    "phone": "(808) 555-0111",
+    "id": 1
+  },
+  {
+    "color": "red",
+    "title": "Mad Hatter's",
+    "address": "123 Cheshire St.",
+    "name": "Alice",
+    "position": "Wanderer",
+    "email": "alice@wonderland.com",
+    "phone": "(123) 456-7890",
+    "id": 2
+  },
+  {
+    "color": "blue",
+    "title": "Mad Hatter's",
+    "address": "123 Cheshire St.",
+    "name": "Alice",
+    "position": "Wanderer",
+    "email": "alice@wonderland.com",
+    "phone": "(123) 456-7890",
+    "id": 3
+  },
+  {
+    "color": "grey-200",
+    "title": "Mad Hatter's",
+    "address": "123 Cheshire St.",
+    "name": "Alice",
+    "position": "Wanderer",
+    "email": "alice@wonderland.com",
+    "phone": "(123) 456-7890",
+    "id": 4
+  },
+  {
+    "color": "grey-300",
+    "title": "Mad Hatter's",
+    "address": "123 Cheshire St.",
+    "name": "Alice",
+    "position": "Wanderer",
+    "email": "alice@wonderland.com",
+    "phone": "(123) 456-7890",
+    "id": 5
+  }
+]

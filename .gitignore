@@ -1,5 +1,9 @@
 # Frontend Dependencies
 node_modules
 
+# build files
+public
+.nuxt
+
 # IDE
 .idea
