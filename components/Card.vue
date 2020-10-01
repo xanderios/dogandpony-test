@@ -1,9 +1,6 @@
 <template>
   <div class="mb-4">
-    <div
-      :class="[`[ card-base ] bg-${card.color} text-white z-10 cursor-pointer`]"
-      @click="toggleTab()"
-    >
+    <div :class="[`[ card-base ] bg-${card.color}`]" @click="toggleTab()">
       <div class="[ main-tab ]">
         <div>
           <p class="text-2xl font-bold">{{ card.title }}</p>
@@ -81,6 +78,9 @@ export default {
 <style scoped>
 .card-base {
   @apply py-12;
+  @apply text-white;
+  @apply z-10;
+  @apply cursor-pointer;
 }
 
 .main-tab {

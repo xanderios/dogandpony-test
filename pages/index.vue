@@ -57,6 +57,6 @@ body,
 }
 
 .content-wrapper {
-  max-width: 320px;
+  max-width: 360px;
 }
 </style>

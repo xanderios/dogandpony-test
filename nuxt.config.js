@@ -28,7 +28,11 @@ export default {
 	/*
 	 * Plugins to load before mounting the App
 	 */
-	plugins: [],
+	plugins: ["~/plugins/vee-validate.js", "~/plugins/vue-mask.js"],
+	build: {
+		transpile: ["vee-validate/dist/rules"],
+		extend(config, ctx) {}
+	},
 
 	/*
 	 * Nuxt.js dev-modules
@@ -41,15 +45,9 @@ export default {
 	/*
 	 * Nuxt.js modules
 	 */
-	modules: [],
+	modules: []
 
 	/*
 	 * Build configuration
 	 */
-	build: {
-		/*
-		 * You can extend webpack config here
-		 */
-		extend(config, ctx) {}
-	}
 };
