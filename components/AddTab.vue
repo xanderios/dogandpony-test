@@ -1,21 +1,24 @@
 <template>
-  <div
-    :class="[
-      '[ card-base ] py-6 transition-all duration-300',
-      addTabMenu
-        ? 'bg-white text-grey-300'
-        : 'bg-red text-white cursor-pointer',
-    ]"
-  >
+  <div>
     <div
-      :class="['absolute inset-0 block', addTabMenu && 'hidden']"
+      :class="[
+        '[ card-base ] py-6 mb-6 transition-all duration-300 bg-red text-white cursor-pointer',
+        addTabMenu && 'opacity-0',
+      ]"
       @click="addTabMenu = true"
-    />
-    <div :class="['flex items-center justify-between', addTabMenu && 'hidden']">
-      <p>Add New Location</p>
-      <plus />
+    >
+      <div class="flex items-center justify-between" @click="addTabMenu = true">
+        <p>Add New Location</p>
+        <plus />
+      </div>
     </div>
-    <div :class="[addTabMenu ? 'block' : 'hidden']">
+
+    <div
+      :class="[
+        '[ new-tab-wrapper card-base ] bg-white text-grey-300',
+        addTabMenu && 'is-active',
+      ]"
+    >
       <div class="flex items-center justify-between">
         <p class="font-bold">New Location</p>
         <button class="p-2 -m-2" @click="addTabMenu = false">
@@ -64,7 +67,7 @@
         </div>
       </div>
 
-      <ValidationObserver v-slot="{ invalid }">
+      <ValidationObserver v-slot="{ invalid, reset }">
         <form class="[ form-wrapper ]" @submit.prevent="onSubmit()">
           <input-base rules="required" label="Title *" :v-model="title" />
           <input-base
@@ -91,7 +94,7 @@
             :v-model="email"
           />
           <input-base
-            rules="required|min"
+            rules="required|min:14"
             placeholder="(xxx) xxx-xxxx"
             label="Phone *"
             mask="(###) ###-####"
@@ -168,6 +171,29 @@ export default {
 </script>
 
 <style>
+.new-tab-wrapper {
+  max-height: 0;
+  @apply overflow-hidden;
+  @apply py-0;
+  @apply opacity-0;
+  @apply pointer-events-none;
+  @apply cursor-default;
+  @apply transform;
+  @apply translate-y-0;
+  @apply transition-all;
+  @apply duration-300;
+}
+
+.new-tab-wrapper.is-active {
+  max-height: 1100px;
+  @apply py-6;
+  @apply opacity-100;
+  @apply pointer-events-auto;
+  @apply -translate-y-6;
+  @apply -mt-20;
+  @apply cursor-auto;
+}
+
 .form-group {
   @apply mt-6;
 }
@@ -239,11 +265,9 @@ export default {
 .error-icon {
   right: 3%;
   top: 30%;
+  @apply opacity-0;
   @apply absolute;
   @apply text-red;
-  @apply opacity-0;
-  @apply transition-opacity;
-  @apply duration-300;
 }
 
 .form-group.is-invalid .error-icon {

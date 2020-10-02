@@ -1,10 +1,10 @@
 <template>
-  <div class="mb-4">
-    <div :class="[`[ card-base ] bg-${card.color}`]" @click="toggleTab()">
+  <div class="mb-10">
+    <div :class="[`[ card-base ] bg-${office.color}`]" @click="toggleTab()">
       <div class="[ main-tab ]">
         <div>
-          <p class="text-2xl font-bold">{{ card.title }}</p>
-          <p>{{ card.address }}</p>
+          <p class="text-2xl font-bold">{{ office.title }}</p>
+          <p>{{ office.address }}</p>
         </div>
         <angle-down
           :class="[
@@ -23,17 +23,20 @@
               tabActive && 'opacity-100',
             ]"
           >
-            <p class="text-lg font-bold">{{ card.name }}</p>
-            <p class="mt-2">{{ card.position }}</p>
-            <p class="mt-2 text-blue">{{ card.email }}</p>
-            <p class="mt-2">{{ card.phone }}</p>
+            <p class="text-lg font-bold">{{ office.name }}</p>
+            <p class="mt-2">{{ office.position }}</p>
+            <p class="mt-2 text-blue">{{ office.email }}</p>
+            <p class="mt-2">{{ office.phone }}</p>
             <hr class="border-grey-100 my-4" />
             <div class="flex justify-between items-center">
               <button class="flex items-center text-grey-200 text-xs uppercase">
                 <pen class="mr-2" />
                 <p>Edit</p>
               </button>
-              <button class="flex items-center text-red text-xs uppercase">
+              <button
+                @click="$emit('delete-office', index)"
+                class="flex items-center text-red text-xs uppercase"
+              >
                 <trash class="mr-2" />
                 <p>Delete</p>
               </button>
@@ -57,8 +60,12 @@ export default {
     };
   },
   props: {
-    card: {
+    office: {
       type: Object,
+      required: true,
+    },
+    index: {
+      type: Number,
       required: true,
     },
   },
