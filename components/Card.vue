@@ -1,62 +1,83 @@
 <template>
-  <div class="mb-10">
-    <div :class="[`[ card-base ] bg-${office.color}`]" @click="toggleTab()">
-      <div class="[ main-tab ]">
-        <div>
-          <p class="text-2xl font-bold">{{ office.title }}</p>
-          <p>{{ office.address }}</p>
-        </div>
-        <angle-down
-          :class="[
-            'ml-4 transition-all duration-300',
-            tabActive && 'transform rotate-180',
-          ]"
-        />
-      </div>
-    </div>
-    <div class="shadow-base">
-      <div :class="['[ info-tab ]', tabActive && '[ info-tab--active ]']">
-        <div class="bg-white">
-          <div
+  <div>
+    <div :class="[tabActive ? 'mb-6' : 'mb-10', editForm && 'hidden']">
+      <div :class="[`[ card-base ] bg-${office.color}`]" @click="toggleTab()">
+        <div class="[ main-tab ]">
+          <div>
+            <p class="text-2xl font-bold">{{ office.title }}</p>
+            <p>{{ office.address }}</p>
+          </div>
+          <angle-down
             :class="[
-              'opacity-0 transition-opacity duration-300',
-              tabActive && 'opacity-100',
+              'ml-4 transition-all duration-300',
+              tabActive && 'transform rotate-180',
             ]"
-          >
-            <p class="text-lg font-bold">{{ office.name }}</p>
-            <p class="mt-2">{{ office.position }}</p>
-            <p class="mt-2 text-blue">{{ office.email }}</p>
-            <p class="mt-2">{{ office.phone }}</p>
-            <hr class="border-grey-100 my-4" />
-            <div class="flex justify-between items-center">
-              <button class="flex items-center text-grey-200 text-xs uppercase">
-                <pen class="mr-2" />
-                <p>Edit</p>
-              </button>
-              <button
-                @click="$emit('delete-office', index)"
-                class="flex items-center text-red text-xs uppercase"
-              >
-                <trash class="mr-2" />
-                <p>Delete</p>
-              </button>
+          />
+        </div>
+      </div>
+      <div class="shadow-base">
+        <div :class="['[ info-tab ]', tabActive && '[ info-tab--active ]']">
+          <div class="bg-white">
+            <div
+              :class="[
+                'opacity-0 transition-opacity duration-300',
+                tabActive && 'opacity-100',
+              ]"
+            >
+              <p class="text-lg font-bold">{{ office.name }}</p>
+              <p class="mt-2">{{ office.position }}</p>
+              <p class="mt-2 text-blue">{{ office.email }}</p>
+              <p class="mt-2">{{ office.phone }}</p>
+              <hr class="border-grey-100 my-4" />
+              <div class="flex justify-between items-center">
+                <button
+                  class="flex items-center text-grey-200 text-xs uppercase"
+                  @click="editForm = true"
+                >
+                  <pen class="mr-2" />
+                  <p>Edit</p>
+                </button>
+                <button
+                  @click="$emit('delete-office', index)"
+                  class="flex items-center text-red text-xs uppercase"
+                >
+                  <trash class="mr-2" />
+                  <p>Delete</p>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div>
+      <form-component
+        :form="office"
+        :editMode="true"
+        :form-open="editForm"
+        @close-form="editForm = false"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import FormComponent from "./Form";
 import AngleDown from "~/icons/AngleDown";
 import Pen from "~/icons/Pen";
 import Trash from "~/icons/Trash";
 
 export default {
+  components: {
+    FormComponent,
+    AngleDown,
+    Pen,
+    Trash,
+  },
   data() {
     return {
       tabActive: false,
+      editForm: false,
     };
   },
   props: {
@@ -68,11 +89,6 @@ export default {
       type: Number,
       required: true,
     },
-  },
-  components: {
-    AngleDown,
-    Pen,
-    Trash,
   },
   methods: {
     toggleTab() {

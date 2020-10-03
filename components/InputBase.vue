@@ -1,10 +1,10 @@
 <template>
   <validation-provider :rules="rules" v-slot="{ errors, classes }">
     <div :class="['[ form-group ]', classes]">
-      <label>{{ label }}</label>
+      <label :for="label">{{ label }}</label>
       <div class="relative">
         <input
-          v-model="model"
+          :id="label"
           type="text"
           :placeholder="placeholder || ''"
           v-mask="mask ? mask : undefined"
@@ -26,10 +26,6 @@ import Notification from "~/icons/Notification";
 export default {
   props: {
     rules: {
-      type: String,
-      required: true,
-    },
-    vModel: {
       type: String,
       required: true,
     },
