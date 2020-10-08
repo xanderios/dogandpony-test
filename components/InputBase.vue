@@ -4,11 +4,12 @@
       <label :for="label">{{ label }}</label>
       <div class="relative">
         <input
+          v-model="model"
           :id="label"
           type="text"
           :placeholder="placeholder || ''"
           v-mask="mask ? mask : undefined"
-          @input="$emit('input', $event.target.value)"
+          @input="$emit('input', model)"
           @focus="focused = true"
           @blur="focused = false"
         />
@@ -25,17 +26,21 @@ import Notification from "~/icons/Notification";
 
 export default {
   props: {
+    initialValue: {
+      type: String,
+      required: true,
+    },
     rules: {
+      type: String,
+      required: true,
+    },
+    label: {
       type: String,
       required: true,
     },
     placeholder: {
       type: String,
       required: false,
-    },
-    label: {
-      type: String,
-      required: true,
     },
     mask: {
       type: String,
@@ -44,13 +49,18 @@ export default {
   },
   data() {
     return {
+      model: "",
       focused: false,
-      model: this.vModel,
     };
   },
   components: {
     ValidationProvider,
     Notification,
+  },
+  watch: {
+    initialValue() {
+      this.model = this.initialValue;
+    },
   },
 };
 </script>

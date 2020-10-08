@@ -1,6 +1,13 @@
 <template>
   <div>
-    <div :class="[tabActive ? 'mb-6' : 'mb-10', editForm && 'hidden']">
+    <div
+      :class="[
+        '[ card-wrapper ]',
+        tabActive ? 'mb-6' : 'mb-10',
+        editForm && '[ card-wrapper--unactive ]',
+        deleted && '[ card-wrapper--deleted ]',
+      ]"
+    >
       <div :class="[`[ card-base ] bg-${office.color}`]" @click="toggleTab()">
         <div class="[ main-tab ]">
           <div>
@@ -38,7 +45,7 @@
                   <p>Edit</p>
                 </button>
                 <button
-                  @click="$emit('delete-office', index)"
+                  @click="deleteOffice"
                   class="flex items-center text-red text-xs uppercase"
                 >
                   <trash class="mr-2" />
@@ -52,10 +59,11 @@
     </div>
     <div>
       <form-component
-        :form="office"
+        :office="office"
         :editMode="true"
-        :form-open="editForm"
+        :form-active="editForm"
         @close-form="editForm = false"
+        @save-office="saveOffice"
       />
     </div>
   </div>
@@ -74,12 +82,6 @@ export default {
     Pen,
     Trash,
   },
-  data() {
-    return {
-      tabActive: false,
-      editForm: false,
-    };
-  },
   props: {
     office: {
       type: Object,
@@ -90,9 +92,27 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      tabActive: false,
+      editForm: false,
+      deleted: false,
+    };
+  },
   methods: {
     toggleTab() {
       this.tabActive = !this.tabActive;
+    },
+    deleteOffice() {
+      this.deleted = true;
+      setTimeout(() => {
+        this.$emit("delete-office", this.index, this.office.id);
+      }, 300);
+    },
+    saveOffice(office) {
+      this.$emit("save-office", office, this.index);
+      this.editForm = false;
+      this.tabActive = true;
     },
   },
 };
@@ -112,6 +132,23 @@ export default {
   @apply justify-between;
 }
 
+.card-wrapper {
+  max-height: 400px;
+  @apply opacity-100;
+  @apply transition-all;
+  @apply duration-300;
+}
+.card-wrapper--unactive {
+  max-height: 0;
+  @apply opacity-0;
+  @apply overflow-hidden;
+}
+.card-wrapper--deleted {
+  @apply transform;
+  @apply -translate-x-12;
+  @apply opacity-0;
+}
+
 .info-tab {
   max-height: 0;
   @apply overflow-hidden;
@@ -119,6 +156,7 @@ export default {
   @apply transition-all;
   @apply duration-300;
   @apply -mt-4;
+  @apply text-grey-300;
 }
 
 .info-tab--active {

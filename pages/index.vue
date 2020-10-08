@@ -1,5 +1,22 @@
 <template>
   <div class="font-sans bg-grey-100 min-h-screen py-20 lg:py-40">
+    <div
+      :class="[
+        'bg-white px-10 py-4 border-t-2 border-blue text-grey-300 fixed top-0 inset-x-0 z-50 flex justify-between transition-opacity duration-300',
+        notificationActive
+          ? 'opacity-100 pointer-events-auto'
+          : 'opacity-0 pointer-events-none',
+      ]"
+    >
+      <span></span>
+      <div class="flex items-center">
+        <check class="text-blue mr-5 h-6" />
+        <p class="text-xs uppercase">The location has been updated.</p>
+      </div>
+      <button @click="notificationActive = false">
+        <times />
+      </button>
+    </div>
     <div class="[ content-wrapper ] px-4 mx-auto">
       <h2 class="text-6xl text-blue font-light text-center">Offices</h2>
       <div class="mt-16">
@@ -19,20 +36,21 @@
           </div>
         </div>
         <form-component
-          :form="form"
+          :office="form"
           :editMode="false"
+          :form-active="addForm"
+          :next-id="nextId"
           @close-form="addForm = false"
-          :form-open="addForm"
+          @add-office="addOffice"
         />
-        <transition-group name="list">
-          <card
-            v-for="(office, index) in offices"
-            :office="office"
-            :key="office.id"
-            :index="index"
-            @delete-office="deleteOffice"
-          />
-        </transition-group>
+        <card
+          v-for="(office, index) in offices"
+          :office="office"
+          :key="office.id"
+          :index="index"
+          @save-office="saveOffice"
+          @delete-office="deleteOffice"
+        />
         <div class="text-center">
           <p class="text-grey-200">This project is for test purpose only.</p>
           <p class="text-blue text-xs uppercase mt-2">
@@ -50,19 +68,24 @@ import offices from "~/data/offices.json";
 import Card from "~/components/Card";
 import FormComponent from "~/components/Form";
 import Plus from "~/icons/Plus";
+import Check from "~/icons/Check";
+import Times from "~/icons/Times";
 
 export default {
   components: {
     Card,
     FormComponent,
     Plus,
+    Check,
+    Times,
   },
   data() {
     return {
       offices,
-      officesLength: 0,
       editedTab: null,
       addForm: false,
+      notificationActive: false,
+      deletedIds: [],
       form: {
         color: "yellow",
         title: "",
@@ -71,20 +94,44 @@ export default {
         position: "",
         email: "",
         phone: "",
-        id: this.officesLength + 1,
+        id: 1,
       },
     };
   },
   methods: {
     addOffice(office) {
-      this.offices.unshift(office);
+      this.offices.unshift({ ...office });
+      this.addForm = false;
+      this.resetForm();
     },
-    deleteOffice(index) {
+    saveOffice(office, index) {
+      this.offices[index] = office;
+      this.notificationActive = true;
+    },
+    deleteOffice(index, id) {
+      this.notificationActive = false;
       this.offices.splice(index, 1);
+      this.deletedIds.unshift(id);
+      this.notificationActive = true;
+      setTimeout(() => {
+        this.notificationActive = false;
+      }, 5000);
     },
-  },
-  mounted() {
-    this.officesLength = this.offices.length;
+    nextId() {
+      return this.deletedIds.pop() || this.offices.length + 1;
+    },
+    resetForm() {
+      this.form = {
+        color: "yellow",
+        title: "",
+        address: "",
+        name: "",
+        position: "",
+        email: "",
+        phone: "",
+        id: this.nextId(),
+      };
+    },
   },
 };
 </script>
@@ -103,19 +150,6 @@ body,
   @apply px-6;
   @apply rounded-lg;
   @apply shadow-base;
-}
-
-.list-enter-active,
-.list-leave-active {
-  @apply transition-all;
-  @apply duration-300;
-}
-
-.list-enter,
-.list-leave-active {
-  @apply opacity-0;
-  @apply transform;
-  @apply -translate-x-16;
 }
 
 .content-wrapper {

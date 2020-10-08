@@ -2,8 +2,9 @@
   <div>
     <div
       :class="[
-        '[ new-tab-wrapper card-base ] bg-white text-grey-300',
-        formOpen && 'is-active',
+        '[ form-tab-wrapper card-base ] bg-white text-grey-300',
+        formActive && 'is-active',
+        !editMode && formActive && '-mt-20',
       ]"
     >
       <div class="flex items-center justify-between">
@@ -32,7 +33,10 @@
         </button>
         <div :class="['[ color-menu ]', colorMenu && '[ color-menu--active ]']">
           <button
-            :class="[`[ colorbox ] bg-${color.colorClass}`]"
+            :class="[
+              `[ colorbox ] bg-${color.colorClass}`,
+              form.color === color.colorClass && 'pointer-events-none',
+            ]"
             v-for="color in colors"
             :id="color.id"
             :key="color.id"
@@ -56,6 +60,7 @@
       <ValidationObserver v-slot="{ invalid, reset }">
         <form class="[ form-wrapper ]" @submit.prevent="handleSubmit()">
           <input-base
+            :initial-value="form.title"
             rules="required"
             label="Title *"
             @input="
@@ -65,6 +70,7 @@
             "
           />
           <input-base
+            :initial-value="form.address"
             rules="required"
             label="Enter the address *"
             @input="
@@ -76,6 +82,7 @@
           <p class="text-xs text-blue uppercase mt-8">Contact information</p>
           <hr class="border-grey-100 mt-3" />
           <input-base
+            :initial-value="form.name"
             rules="required|alpha_spaces"
             label="Full name *"
             @input="
@@ -85,6 +92,7 @@
             "
           />
           <input-base
+            :initial-value="form.position"
             rules="required"
             label="Job position *"
             @input="
@@ -94,6 +102,7 @@
             "
           />
           <input-base
+            :initial-value="form.email"
             rules="required|email"
             label="Email address *"
             placeholder="name@example.com"
@@ -104,6 +113,7 @@
             "
           />
           <input-base
+            :initial-value="form.phone"
             rules="required|min:14"
             placeholder="(xxx) xxx-xxxx"
             label="Phone *"
@@ -147,19 +157,23 @@ export default {
     Check,
   },
   props: {
-    formOpen: {
+    formActive: {
       type: Boolean,
       required: true,
       default: false,
     },
-    form: {
+    office: {
       type: Object,
-      required: true,
+      required: false,
     },
     editMode: {
       type: Boolean,
       required: false,
       default: false,
+    },
+    nextId: {
+      type: Function,
+      required: false,
     },
   },
   data() {
@@ -172,6 +186,16 @@ export default {
         { colorClass: "grey-200", id: 4 },
         { colorClass: "grey-300", id: 5 },
       ],
+      form: {
+        color: "yellow",
+        title: "",
+        address: "",
+        name: "",
+        position: "",
+        email: "",
+        phone: "",
+        id: this.nextId || this.office.id,
+      },
     };
   },
   methods: {
@@ -180,15 +204,21 @@ export default {
       this.colorMenu = false;
     },
     handleSubmit() {
-      this.$emit("submit-form", this.form);
-      this.formOpen = false;
+      if (this.editMode) {
+        this.$emit("save-office", { ...this.form });
+      } else {
+        this.$emit("add-office", { ...this.form });
+      }
     },
+  },
+  mounted() {
+    this.form = { ...this.office };
   },
 };
 </script>
 
 <style>
-.new-tab-wrapper {
+.form-tab-wrapper {
   max-height: 0;
   @apply overflow-hidden;
   @apply py-0;
@@ -201,13 +231,12 @@ export default {
   @apply duration-300;
 }
 
-.new-tab-wrapper.is-active {
-  max-height: 1100px;
+.form-tab-wrapper.is-active {
+  max-height: 2000px;
   @apply py-6;
   @apply opacity-100;
   @apply pointer-events-auto;
   @apply -translate-y-6;
-  @apply mt-6;
   @apply cursor-auto;
 }
 
