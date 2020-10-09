@@ -171,10 +171,6 @@ export default {
       required: false,
       default: false,
     },
-    nextId: {
-      type: Function,
-      required: false,
-    },
   },
   data() {
     return {
@@ -194,7 +190,6 @@ export default {
         position: "",
         email: "",
         phone: "",
-        id: this.nextId || this.office.id,
       },
     };
   },
@@ -208,7 +203,19 @@ export default {
         this.$emit("save-office", { ...this.form });
       } else {
         this.$emit("add-office", { ...this.form });
+        this.resetForm();
       }
+    },
+    resetForm() {
+      this.form = {
+        color: "yellow",
+        title: "",
+        address: "",
+        name: "",
+        position: "",
+        email: "",
+        phone: "",
+      };
     },
   },
   mounted() {

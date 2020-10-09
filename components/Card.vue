@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="Object.keys(office).length">
     <div
       :class="[
         '[ card-wrapper ]',
@@ -87,10 +87,6 @@ export default {
       type: Object,
       required: true,
     },
-    index: {
-      type: Number,
-      required: true,
-    },
   },
   data() {
     return {
@@ -106,11 +102,11 @@ export default {
     deleteOffice() {
       this.deleted = true;
       setTimeout(() => {
-        this.$emit("delete-office", this.index, this.office.id);
+        this.$emit("delete-office");
       }, 300);
     },
     saveOffice(office) {
-      this.$emit("save-office", office, this.index);
+      this.$emit("save-office", office);
       this.editForm = false;
       this.tabActive = true;
     },

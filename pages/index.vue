@@ -39,17 +39,15 @@
           :office="form"
           :editMode="false"
           :form-active="addForm"
-          :next-id="nextId"
           @close-form="addForm = false"
           @add-office="addOffice"
         />
         <card
           v-for="(office, index) in offices"
           :office="office"
-          :key="office.id"
-          :index="index"
-          @save-office="saveOffice"
-          @delete-office="deleteOffice"
+          :key="index"
+          @save-office="(office) => saveOffice(office, index)"
+          @delete-office="deleteOffice(index)"
         />
         <div class="text-center">
           <p class="text-grey-200">This project is for test purpose only.</p>
@@ -85,7 +83,6 @@ export default {
       editedTab: null,
       addForm: false,
       notificationActive: false,
-      deletedIds: [],
       form: {
         color: "yellow",
         title: "",
@@ -94,7 +91,6 @@ export default {
         position: "",
         email: "",
         phone: "",
-        id: 1,
       },
     };
   },
@@ -102,35 +98,18 @@ export default {
     addOffice(office) {
       this.offices.unshift({ ...office });
       this.addForm = false;
-      this.resetForm();
     },
     saveOffice(office, index) {
       this.offices[index] = office;
       this.notificationActive = true;
     },
-    deleteOffice(index, id) {
+    deleteOffice(index) {
       this.notificationActive = false;
-      this.offices.splice(index, 1);
-      this.deletedIds.unshift(id);
+      this.offices[index] = {};
       this.notificationActive = true;
       setTimeout(() => {
         this.notificationActive = false;
       }, 5000);
-    },
-    nextId() {
-      return this.deletedIds.pop() || this.offices.length + 1;
-    },
-    resetForm() {
-      this.form = {
-        color: "yellow",
-        title: "",
-        address: "",
-        name: "",
-        position: "",
-        email: "",
-        phone: "",
-        id: this.nextId(),
-      };
     },
   },
 };
