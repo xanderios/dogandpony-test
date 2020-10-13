@@ -198,7 +198,6 @@ export default {
         position: "",
         email: "",
         phone: "",
-        deleted: false,
       },
     };
   },
@@ -211,7 +210,7 @@ export default {
       if (this.editMode) {
         this.$emit("save-office", { ...this.form });
       } else {
-        this.$emit("add-office", { ...this.form });
+        this.$emit("add-office", { ...this.form, deleted: false });
         this.resetForm();
       }
     },
