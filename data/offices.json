@@ -6,7 +6,8 @@
     "name": "Hellena John",
     "position": "Software Tester",
     "email": "georgia.young@example.com",
-    "phone": "(808) 555-0111"
+    "phone": "(808) 555-0111",
+    "deleted": false
   },
   {
     "color": "red",
@@ -15,7 +16,8 @@
     "name": "Alice in Wonderland",
     "position": "Wanderer",
     "email": "alice@wonderland.com",
-    "phone": "(123) 456-7890"
+    "phone": "(123) 456-7890",
+    "deleted": false
   },
   {
     "color": "blue",
@@ -24,7 +26,8 @@
     "name": "Alice in Wonderland",
     "position": "Wanderer",
     "email": "alice@wonderland.com",
-    "phone": "(123) 456-7890"
+    "phone": "(123) 456-7890",
+    "deleted": false
   },
   {
     "color": "grey-200",
@@ -33,7 +36,8 @@
     "name": "Alice in Wonderland",
     "position": "Wanderer",
     "email": "alice@wonderland.com",
-    "phone": "(123) 456-7890"
+    "phone": "(123) 456-7890",
+    "deleted": false
   },
   {
     "color": "grey-300",
@@ -42,6 +46,7 @@
     "name": "Alice in Wonderland",
     "position": "Wanderer",
     "email": "alice@wonderland.com",
-    "phone": "(123) 456-7890"
+    "phone": "(123) 456-7890",
+    "deleted": false
   }
 ]

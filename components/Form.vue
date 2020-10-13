@@ -58,7 +58,15 @@
         </div>
       </div>
       <ValidationObserver v-slot="{ invalid, reset }">
-        <form class="[ form-wrapper ]" @submit.prevent="handleSubmit()">
+        <form
+          class="[ form-wrapper ]"
+          @submit.prevent="
+            function () {
+              handleSubmit();
+              reset();
+            }
+          "
+        >
           <input-base
             :initial-value="form.title"
             rules="required"
@@ -190,6 +198,7 @@ export default {
         position: "",
         email: "",
         phone: "",
+        deleted: false,
       },
     };
   },
@@ -215,6 +224,7 @@ export default {
         position: "",
         email: "",
         phone: "",
+        deleted: false,
       };
     },
   },

@@ -51,9 +51,12 @@
         />
         <div class="text-center">
           <p class="text-grey-200">This project is for test purpose only.</p>
-          <p class="text-blue text-xs uppercase mt-2">
+          <a
+            href="www.dogandponystudios.com"
+            class="block text-blue text-xs uppercase mt-2"
+          >
             www.dogandponystudios.com
-          </p>
+          </a>
         </div>
       </div>
     </div>

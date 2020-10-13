@@ -5,7 +5,7 @@
         '[ card-wrapper ]',
         tabActive ? 'mb-6' : 'mb-10',
         editForm && '[ card-wrapper--unactive ]',
-        deleted && '[ card-wrapper--deleted ]',
+        office.deleted && '[ card-wrapper--deleted ]',
       ]"
     >
       <div :class="[`[ card-base ] bg-${office.color}`]" @click="toggleTab()">
@@ -92,7 +92,6 @@ export default {
     return {
       tabActive: false,
       editForm: false,
-      deleted: false,
     };
   },
   methods: {
@@ -100,7 +99,7 @@ export default {
       this.tabActive = !this.tabActive;
     },
     deleteOffice() {
-      this.deleted = true;
+      this.office.deleted = true;
       setTimeout(() => {
         this.$emit("delete-office");
       }, 300);
