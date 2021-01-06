@@ -12,7 +12,7 @@ module.exports = {
 			}
 		},
 		fontFamily: {
-			sans: ["Poppins", "Helvetica", "Arial", "sans-serif"]
+			sans: ["Proxima Nova", "Poppins", "Helvetica", "Arial", "sans-serif"]
 		},
 		boxShadow: {
 			micro: "0px 1px 2px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.1)",
