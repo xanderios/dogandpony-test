@@ -2,7 +2,7 @@
 
 # Senior Frontend Developer Test
 
-![preview gif](preview.gif)
+![preview gif](https://media.giphy.com/media/ZibRUcsE86Tjuy142F/giphy.gif)
 
 ## Instructions to reproduce
 
