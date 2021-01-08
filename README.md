@@ -2,6 +2,8 @@
 
 # Senior Frontend Developer Test
 
+![reproduction gif](gif.mp4)
+
 ## Instructions to reproduce
 
 _This project uses [Nuxt.js](https://nuxtjs.org/). In order to run this project, you need Nuxt either globally or locally installed._
