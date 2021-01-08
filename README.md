@@ -2,7 +2,7 @@
 
 # Senior Frontend Developer Test
 
-![reproduction gif](gif.mp4)
+![preview gif](preview.gif)
 
 ## Instructions to reproduce
 
